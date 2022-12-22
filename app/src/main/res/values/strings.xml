@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AwesomeApp</string>
+    <string name="users_button">Get users</string>
+</resources>
