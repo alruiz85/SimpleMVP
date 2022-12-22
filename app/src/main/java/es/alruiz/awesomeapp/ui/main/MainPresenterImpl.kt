@@ -1,49 +1,39 @@
-package es.alruiz.awesomeapp.ui.main;
+package es.alruiz.awesomeapp.ui.main
 
-import android.util.Log;
-
-import java.util.List;
-
-import es.alruiz.awesomeapp.core.interactor.GetUsersInteractor;
-import es.alruiz.awesomeapp.core.interactor.impl.GetUsersInteractorImpl;
-import es.alruiz.awesomeapp.objects.User;
+import android.util.Log
+import es.alruiz.awesomeapp.core.interactor.GetUsersInteractor
+import es.alruiz.awesomeapp.core.interactor.impl.GetUsersInteractorImpl
+import es.alruiz.awesomeapp.objects.User
 
 /**
  * Created by AlfonsoRuiz on 30/10/2016.
  */
+class MainPresenterImpl(private val view: MainView) {
 
-public class MainPresenterImpl {
+    private val getUsersInteractor: GetUsersInteractor
 
-    private MainView view;
-    private GetUsersInteractor getUsersInteractor;
-
-    public MainPresenterImpl(MainView view) {
-        this.view = view;
-        getUsersInteractor = new GetUsersInteractorImpl();
+    init {
+        getUsersInteractor = GetUsersInteractorImpl()
     }
 
-    public void getUsers() {
-        view.showLoading();
-        getUsersInteractor.getUsers(new UserListener() {
-            @Override
-            public void onSuccess(List<User> body) {
-                Log.i("TAG", "Usuario " + body);
-                view.setRepositoryUsers(body);
-                view.hideLoading();
+    fun getUsers() {
+        view.showLoading()
+        getUsersInteractor.getUsers(object : UserListener {
+            override fun onSuccess(body: List<User>) {
+                Log.i("TAG", "Usuario $body")
+                view.setRepositoryUsers(body)
+                view.hideLoading()
             }
 
-            @Override
-            public void onFailure() {
-                Log.i("TAG", "Error: error del servidor");
-                view.hideLoading();
+            override fun onFailure() {
+                Log.i("TAG", "Error: error del servidor")
+                view.hideLoading()
             }
-        });
+        })
     }
 
-    public interface UserListener {
-        void onSuccess(List<User> body);
-        void onFailure();
+    interface UserListener {
+        fun onSuccess(body: List<User>)
+        fun onFailure()
     }
-
 }
-
