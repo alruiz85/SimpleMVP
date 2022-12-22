@@ -1,6 +1,5 @@
 package es.alruiz.awesomeapp.ui.main;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.util.List;
@@ -13,34 +12,38 @@ import es.alruiz.awesomeapp.objects.User;
  * Created by AlfonsoRuiz on 30/10/2016.
  */
 
-public class MainPresenterImpl implements MainPresenter {
+public class MainPresenterImpl {
 
-    private MainActivity mainActivity;
+    private MainView view;
     private GetUsersInteractor getUsersInteractor;
 
-    public MainPresenterImpl(MainActivity mainActivity, Context context) {
-        this.mainActivity = mainActivity;
+    public MainPresenterImpl(MainView view) {
+        this.view = view;
         getUsersInteractor = new GetUsersInteractorImpl();
     }
 
-    @Override
     public void getUsers() {
-        mainActivity.showLoading();
-        getUsersInteractor.getUsers(new MainPresenter.UserListener() {
+        view.showLoading();
+        getUsersInteractor.getUsers(new UserListener() {
             @Override
             public void onSuccess(List<User> body) {
-                Log.i("TAG", "Usuario "+ body);
-                mainActivity.setRepositoryUsers(body);
-                mainActivity.hideLoading();
+                Log.i("TAG", "Usuario " + body);
+                view.setRepositoryUsers(body);
+                view.hideLoading();
             }
 
             @Override
             public void onFailure() {
                 Log.i("TAG", "Error: error del servidor");
-                mainActivity.hideLoading();
+                view.hideLoading();
             }
         });
     }
 
+    public interface UserListener {
+        void onSuccess(List<User> body);
+        void onFailure();
+    }
 
 }
+

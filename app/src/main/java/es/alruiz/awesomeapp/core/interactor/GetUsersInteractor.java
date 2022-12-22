@@ -1,6 +1,6 @@
 package es.alruiz.awesomeapp.core.interactor;
 
-import es.alruiz.awesomeapp.ui.main.MainPresenter;
+import es.alruiz.awesomeapp.ui.main.MainPresenterImpl;
 
 /**
  * Created by AlfonsoRuiz on 30/10/2016.
@@ -8,6 +8,6 @@ import es.alruiz.awesomeapp.ui.main.MainPresenter;
 
 public interface GetUsersInteractor {
 
-    void getUsers(MainPresenter.UserListener userListener);
+    void getUsers(MainPresenterImpl.UserListener userListener);
 
 }

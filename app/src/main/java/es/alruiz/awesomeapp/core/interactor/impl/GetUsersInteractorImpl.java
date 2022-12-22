@@ -8,7 +8,7 @@ import es.alruiz.awesomeapp.connection.GitHubService;
 import es.alruiz.awesomeapp.connection.ServiceManager;
 import es.alruiz.awesomeapp.core.interactor.GetUsersInteractor;
 import es.alruiz.awesomeapp.objects.User;
-import es.alruiz.awesomeapp.ui.main.MainPresenter;
+import es.alruiz.awesomeapp.ui.main.MainPresenterImpl;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,7 +20,7 @@ import retrofit2.Response;
 public class GetUsersInteractorImpl implements GetUsersInteractor {
 
     @Override
-    public void getUsers(final MainPresenter.UserListener userListener) {
+    public void getUsers(final MainPresenterImpl.UserListener userListener) {
         GitHubService gitHubService = ServiceManager.createUsersService(GitHubService.class);
         Call<List<User>> userCall = gitHubService.listUsers();
         userCall.enqueue(new Callback<List<User>>() {
@@ -31,7 +31,6 @@ public class GetUsersInteractorImpl implements GetUsersInteractor {
                 } else {
                     userListener.onFailure();
                 }
-
             }
 
             @Override
